@@ -5,6 +5,9 @@ const select=document.getElementById('movie');
 const seats=document.querySelectorAll('.seat:not(.reserved)')
 
 
+getFromLocalStorage();
+calculatetotal();
+
 container.addEventListener('click',function(e){
 if(e.target.classList.contains('seat') && !e.target.classList.contains('reserved'))
 e.target.classList.toggle('selected');
@@ -43,6 +46,25 @@ function calculatetotal(){
 
     savetolocalstorage(selectedseatindexs);
     
+}
+function getFromLocalStorage() {
+    const selectedseats = JSON.parse(localStorage.getItem('selectedseats'));
+
+    if (selectedseats !=null && selectedseats.length > 0) {
+        seats.forEach(function(seat, index) {
+            if (selectedseats.indexOf(index) > -1) {
+                seat.classList.add('selected');
+            }
+        });
+    }
+
+
+
+    const selectedmovieindex = localStorage.getItem('selectedmovieindex');
+
+    if (selectedmovieindex != null) {
+        select.selectedIndex = selectedmovieindex;
+    }
 }
 
 function savetolocalstorage(indexs){
